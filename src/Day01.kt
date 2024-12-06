@@ -1,7 +1,7 @@
 import kotlin.math.abs
 
 fun main() {
-    fun part1(input: List<String>): Int {
+    fun sortedLists(input: List<String>): Pair<List<Int>, List<Int>> {
         val firstList = ArrayList<Int>()
         val secondList = ArrayList<Int>()
 
@@ -11,12 +11,15 @@ fun main() {
             secondList.add(second.toInt())
         }
 
-        val sortedFirstList = firstList.sorted()
-        val sortedSecondList = secondList.sorted()
+        return firstList.sorted() to secondList.sorted()
+    }
+
+    fun part1(input: List<String>): Int {
+        val (first, second) = sortedLists(input)
         var totalDistance = 0
 
-        for ((index, _) in sortedFirstList.withIndex()) {
-            val distance = abs(sortedFirstList[index] - sortedSecondList[index])
+        for (index in first.indices) {
+            val distance = abs(first[index] - second[index])
             totalDistance += distance
         }
 
@@ -24,21 +27,11 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        val firstList = ArrayList<Int>()
-        val secondList = ArrayList<Int>()
-
-        input.forEach { line ->
-            val (first, second) = line.split("   ")
-            firstList.add(first.toInt())
-            secondList.add(second.toInt())
-        }
-
-        val sortedFirstList = firstList.sorted()
-        val sortedSecondList = secondList.sorted()
+        val (first, second) = sortedLists(input)
         var similarityScore = 0
 
-        sortedFirstList.forEach { element ->
-            val occurrences = sortedSecondList.count { element == it }
+        first.forEach { element ->
+            val occurrences = second.count { element == it }
             similarityScore += element * occurrences
         }
 
