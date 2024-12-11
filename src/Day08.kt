@@ -1,5 +1,3 @@
-enum class Direction {RIGHT, LEFT}
-
 data class Vector(val x: Int, val y: Int) {
     operator fun minus(other: Vector) = Vector(x - other.x, y - other.y)
     operator fun plus(other: Vector) = Vector(x + other.x, y + other.y)
